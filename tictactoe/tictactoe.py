@@ -1,6 +1,7 @@
 """
 tictactoe.py
 
+An interactive game in Python
 Created by Philo van Kemenade
 """
 
@@ -9,21 +10,15 @@ import random
 class TicTacToe(object):
     """A game of Tic Tac Toe"""
     def __init__(self):
-        super(TicTacToe, self).__init__()
         self.playing = True
         self.board = Board()
         self.turn = self.whoStarts()
         print "Welcome to Tic Tac Toe"
     
-    def whoStarts(self):
-        if random.randint(0,1) == 0:
-            return "X"
-        else:
-            return "O"
     
     # start the game
     def start(self):
-        self.evaluate()
+        self.reset()
         while self.playing:
             print "\n"
             self.board.print_board()
@@ -33,22 +28,35 @@ class TicTacToe(object):
             if move:
                 [row, col] = move
                 self.board.mark_move(row, col, self.get_turn())
+                self.evaluate()
                 self.switch_turn()
             else:
                 print "That's not a valid move, please try again"
                 continue
-
+        
         self.board.print_board()
-        if self.hasWinner():
-            # previous player won the game
-            self.switch_turn()
-            print "\nPlayer ", self.get_turn(), " has won! Congrats!"
-        else:
-            print "That's a draw"
-        self.playAgain()
+        print self.result
+        
+        # if self.hasWinner():
+        #     # previous player won the game
+        #     self.switch_turn()
+        #     print "\nPlayer ", self.get_turn(), " has won! Congrats!"
+        # else:
+        #     print "That's a draw"
+        if self.playAgain():
+            self.start()
             
+    def reset(self):
+        """reset the board for a new game"""
+        self.playing = True
+        self.board = Board()
+        self.turn = self.whoStarts()
         
-        
+    def whoStarts(self):
+        if random.randint(0,1) == 0:
+            return "X"
+        else:
+            return "O"
     
     # get current player
     def get_turn(self):
@@ -67,28 +75,31 @@ class TicTacToe(object):
         return raw_input("Please input a move: [row], [column]\n")    
     
     def evaluate(self):
-        # check for winner
-        # check rows
+        """check if game has ended by three in a row"""
+        # check horizontal rows
         for row in self.board.cells:
             if self.lineOf3(row):
                 self.playing = False
-                return True
-        # check cols
+                self.setWinner()
+        # check vertical columns
         for i in range(3):
             col = [row[i] for row in self.board.cells]
             if self.lineOf3(col):
                 self.playing = False
-                return True
+                self.setWinner()
         # check diagonal
         diag1 = [self.board.cells[i][i] for i in [0,1,2]]
         diag2 = [self.board.cells[i][2-i] for i in [0,1,2]]
         if self.lineOf3(diag1):
             self.playing = False
-            return True
+            self.setWinner()
         if self.lineOf3(diag2):
             self.playing = False
-            return True
-        return None
+            self.setWinner()
+    
+    def setWinner(self):
+        """set result to reflect current winner"""
+        self.result = "*** player " + self.turn + " has won the game! ***"
     
     def hasWinner(self):
         pass
@@ -111,7 +122,7 @@ class TicTacToe(object):
             posList = move.split(",", 2)
             [row, col]  = [int(posList[0]), int(posList[1])]
         except:
-            print "please specify to integers as [row], [column]"
+            print "please specify two integer coordinates as [row], [column]"
             return None
         if self.valid_move(row, col):
             return [row, col]            
