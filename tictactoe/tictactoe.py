@@ -15,15 +15,16 @@ class TicTacToe(object):
         self.turn = self.whoStarts()
         print "Welcome to Tic Tac Toe"
     
-    
     # start the game
     def start(self):
-        self.reset()
+        """Loop game dynamics until game has ended, print result, play again?"""
+        # init resets the board
+        self.__init__()
         while self.playing:
-            print "\n"
-            self.board.print_board()
+            self.board.show_board()
             raw_move = self.get_player_input()
-            # parse and check move validity
+            print "\n"
+            # parse and check move validity of move
             move = self.parse_move(raw_move)
             if move:
                 [row, col] = move
@@ -34,48 +35,38 @@ class TicTacToe(object):
                 print "That's not a valid move, please try again"
                 continue
         
-        self.board.print_board()
+        self.board.show_board()
         print self.result
-        
-        # if self.hasWinner():
-        #     # previous player won the game
-        #     self.switch_turn()
-        #     print "\nPlayer ", self.get_turn(), " has won! Congrats!"
-        # else:
-        #     print "That's a draw"
-        if self.playAgain():
+        if self.play_again():
             self.start()
-            
-    def reset(self):
-        """reset the board for a new game"""
-        self.playing = True
-        self.board = Board()
-        self.turn = self.whoStarts()
+    
         
     def whoStarts(self):
+        """pick random player X or O to start"""
         if random.randint(0,1) == 0:
             return "X"
         else:
             return "O"
     
-    # get current player
     def get_turn(self):
+        """get current player"""
         return self.turn
     
-    # switch current player
     def switch_turn(self):
+        """switch current player"""
         if self.turn == "X":
             self.turn = "O"
         else:
             self.turn = "X"
     
-    # get player's input
     def get_player_input(self):
+        """get player's input"""
         print "Current player: ", self.get_turn()
-        return raw_input("Please input a move: [row], [column]\n")    
+        return raw_input("Please input your move: [row], [column]\n")
     
     def evaluate(self):
-        """check if game has ended by three in a row"""
+        """check if game has ended"""
+        ## check for three in a row
         # check horizontal rows
         for row in self.board.cells:
             if self.lineOf3(row):
@@ -96,18 +87,24 @@ class TicTacToe(object):
         if self.lineOf3(diag2):
             self.playing = False
             self.setWinner()
+        
+        ## check check for full board
+        if self.board.is_full():
+            self.playing = False
+            self.setDraw()
     
     def setWinner(self):
         """set result to reflect current winner"""
         self.result = "*** player " + self.turn + " has won the game! ***"
     
-    def hasWinner(self):
-        pass
+    def setDraw(self):
+        """set result to reflect draw"""
+        self.result = "*** That's a draw... ***"
     
     def lineOf3(self, cellList):
         '''check if 3 elements cause winner'''
         # check if first element is non-empty
-        if cellList[0] != "_":
+        if cellList[0] != " ":
             # check is all elements in cellList are equal
             if cellList.count(cellList[0]) == len(cellList):
                 # return sign
@@ -118,6 +115,7 @@ class TicTacToe(object):
             return False
     
     def parse_move(self, move):
+        """check whether move is valid and parse row and column"""
         try:
             posList = move.split(",", 2)
             [row, col]  = [int(posList[0]), int(posList[1])]
@@ -127,38 +125,87 @@ class TicTacToe(object):
         if self.valid_move(row, col):
             return [row, col]            
         else:
-            print "that's not a valid move, try again"
             return None
     
     def valid_move(self, row, col):
+        """check if move to (row, col) is valid"""
         # check if position coords are on board
-        if row not in [0,1,2] or col not in [0,1,2]:
+        if not self.board.is_move_on_board(row, col):
+            print "that position is not on the board"
             return False
         # check whether position is free
-        elif self.board.cells[row][col] != "_":
+        elif not self.board.is_cell_free(row, col):
             print "that position is not empty"
             return False
         else:
             return True
     
-    def playAgain(self):
-        again = raw_input("Would you like to play again? (yes / no)")
+    def play_again(self):
+        """ask and return whether player wants another game"""
+        again = raw_input("Would you like to play again? [y(es) / n(o)]\n")
         return again.lower().startswith('y')
     
 class Board:
-    # cells = []
     def __init__(self):
-        # self.cells = [[cell() for y in range(3)] for x in range(3)]
-        self.cells = [["_" for y in range(3)] for x in range(3)]
-        self.turn = "X"
+        """initialise board with cells"""
+        self.cells = self.make_cells() 
     
-    def print_board(self):
-        for row in self.cells:
-            print row
+    def make_cells(self):
+        """make empty cells of tictactoe board
+        return 1 list of 3 rows
+        where each row is a list of 3 "spaces" to represent empty cells
+        """
+        return [[" ", " ", " "],
+                [" ", " ", " "], 
+                [" ", " ", " "]]
+    
+    def show_board(self):
+        """ print current board to screen in a fancy way"""
+        # get rows from cells
+        row1 = self.cells[0]
+        row2 = self.cells[1]
+        row3 = self.cells[2]
         
+        # print first row
+        print row1[0] + "|" + row1[1] + "|" + row1[2]
+        
+        # print horizontal line
+        print "-----"
+        
+        # print second row
+        print row2[0] + "|" + row2[1] + "|" + row2[2]
+        
+        # print horizontal line
+        print "-----"
+        
+        # print third row    
+        print row3[0] + "|" + row3[1] + "|" + row3[2]
+    
     def mark_move(self, row, col, sign):
+        """mark move (row, col) of sign on board"""
         self.cells[row][col] = sign
     
+    def is_move_on_board(self, row, col):
+        """check if move is within board coordinates"""
+        if row in [0,1,2] and col in [0,1,2]:
+            return True
+        else:
+            return False
+    
+    def is_cell_free(self, row, col):
+        """Return True if cell is empty, otherwise return False """
+        if self.cells[row][col] == " ":
+            return True
+        else:
+            return False
+    
+    def is_full(self):
+        """Return False if any cell is empty, return True otherwise"""
+        for row in range(3):
+            for col in range(3):
+                if self.is_cell_free(row, col):
+                    return False
+        return True
     
 def main():
     myGame = TicTacToe()
