@@ -13,11 +13,11 @@ class TicTacToe(object):
         self.playing = True
         self.board = Board()
         self.turn = self.whoStarts()
-        print "Welcome to Tic Tac Toe"
     
     # start the game
     def start(self):
         """Loop game dynamics until game has ended, print result, play again?"""
+        print "\nWelcome to Tic Tac Toe"
         # init resets the board
         self.__init__()
         while self.playing:
