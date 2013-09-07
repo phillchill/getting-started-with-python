@@ -9,5 +9,5 @@ span multiple lines
 # mind the quotes
 print("Hello World")
 
-# you can also use "print [what you want to print]" without parentheses
+# In Python 2 you can also use "print [what you want to print]" without parentheses
 print "Hello Sun"
