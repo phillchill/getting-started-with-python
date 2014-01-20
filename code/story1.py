@@ -10,6 +10,3 @@ def greet(name):
 # start by executing the main function
 if __name__ == '__main__':
 	main()
-
-# start by executing the main function
-if __name__ == '__main__':
