@@ -1428,25 +1428,43 @@ by</font><font style="font-size: 18px;"> <a href="http://www.flickr.com/photos/
 
 
 
-<p class="p1"><span class="s1">You use <i style="font-weight: bold;"><font color="#ff0000">loops</font></i> to repeat a statement.</span></p>
-<p class="p2"><span class="s1">A <b><i><font color="#ff0000">for-loop</font></i></b> is useful when you know how many times you want to repeat an action (e.g. for every item in a list)</span></p>
-<p class="p2"><span class="s1"><br></span></p>
+<p class="p1">
+<span class="s1">You use <i style="font-weight: bold;">
+    <font color="#ff0000">loops</font>
+    </i> to repeat a statement.</span>
+</p>
+<p class="p2">
+<span class="s1">A <b>
+    <i>
+    <font color="#ff0000">for-loop</font>
+</i>
+</b> is useful when you know how many times you want to repeat an action (e.g. for every item in a list)</span>
+</p>
+<p class="p2">
+<span class="s1">
+    <br></span>
+</p>
 <pre><code>&gt;&gt;&gt; ages = [18, 21, 16, 12]
-&gt;&gt;&gt; <font color="#ff0000">for</font> number <font color="#ff0000">in</font> ages:
-...     print number
+&gt;&gt;&gt; <font color="#ff0000">for</font> age <font color="#ff0000">in</font> ages:
+...     print age
 ... 
 18
 21
 16
-12
- </code></pre>
-</div></section><section><h2>Loops</h2>
+12<br></code></pre>
+</div>
+<font style="font-size: 24px;"><a href="http://pythontutor.com/visualize.html#code=ages+%3D+%5B18,+21,+16,+12%5D%0Afor+age+in+ages%3A%0A++++print+age&amp;mode=display&amp;cumulative=false&amp;heapPrimitives=false&amp;drawParentPointers=false&amp;textReferences=false&amp;showOnlyOutputs=false&amp;py=2&amp;curInstr=10">Visualise this code in action</a></font></section><section><h2>Loops</h2>
 <div>
-<p class="p2"><span class="s1"><br></span></p>
+<p class="p2">
+</p>
 <p class="p2">
 <span class="s1">A <b>
     <i>
-    <font color="#ff0000">while-loop</font> </i></b></span><span>is useful when you don’t know when you want to stop looping yet.</span></p>
+    <font color="#ff0000">while-loop</font> </i>
+</b>
+</span>
+<span>is useful when you don’t know when you want to stop looping yet.</span>
+</p>
 
 
 
@@ -1455,7 +1473,9 @@ by</font><font style="font-size: 18px;"> <a href="http://www.flickr.com/photos/
 
 
 
-<p class="p1"><span class="s1">A while-loop statement checks a <i>condition</i> and loops until the condition is no longer satisfied.</span></p>
+<p class="p1">
+<span class="s1">A while-loop statement checks a <i>condition</i> and loops until the condition is no longer satisfied.</span>
+</p>
 <p class="p2">
 </p>
 <pre><code>&gt;&gt;&gt; gas = 42
@@ -1469,7 +1489,7 @@ Vroom!
 Vroom!
 Vroom! </code></pre>
 </div>
-</section><section data-background-image="https://s3.amazonaws.com/media-p.slid.es/uploads/phillchill/images/54315/train_split.jpg"><h1 style="font-style: normal; font-variant: normal;">
+<a href="http://pythontutor.com/visualize.html#code=gas+%3D+42%0Awhile+gas+%3E+0%3A%0A++++print+%22Vroom!%22%0A++++gas+%3D+gas+-+10&amp;mode=display&amp;cumulative=false&amp;heapPrimitives=false&amp;drawParentPointers=false&amp;textReferences=false&amp;showOnlyOutputs=false&amp;py=2&amp;curInstr=10"><font style="font-size: 24px;">Visualise this code in action</font></a></section><section data-background-image="https://s3.amazonaws.com/media-p.slid.es/uploads/phillchill/images/54315/train_split.jpg"><h1 style="font-style: normal; font-variant: normal;">
     <br>
 </h1>
 <div>
@@ -1540,9 +1560,24 @@ no drinks for you
 
 
 
-<p class="p1"><span class="s1"><font style="font-size: 32px;"><b><i><font color="#ff0000">Conditional statements</font></i></b> enable you to deal with multiple options. </font></span></p>
-<p class="p2"><font style="font-size: 32px;"><span class="s1">A part of your code is executed based on the truth value of a condtion. You perform conditional checks with: </span><span class="s2">if, (elif), else</span></font></p>
-<p class="p2"><br></p>
+<p class="p1">
+<span class="s1">
+    <font style="font-size: 32px;">
+        <b>
+        <i>
+        <font color="#ff0000">Conditional statements</font>
+    </i>
+    </b> enable you to deal with multiple options. </font>
+</span>
+</p>
+<p class="p2">
+<font style="font-size: 32px;">
+    <span class="s1">A part of your code is executed based on the truth value of a condtion. You perform conditional checks with: </span>
+    <span class="s2">if, (elif), else</span>
+</font>
+</p>
+<p class="p2">
+</p>
 <pre><code>&gt;&gt;&gt; ages = [18, 21, 16, 12]
 &gt;&gt;&gt; for number in ages:
 ...     <font color="#ff0000">if</font> number &gt;= 18:
@@ -1557,7 +1592,8 @@ no drinks for you
 not quite yet
 get outta here</code></pre>
 </div>
-</section><section data-background-image="https://s3.amazonaws.com/media-p.slid.es/uploads/phillchill/images/54314/train_station2.png"><h1 style="font-style: normal; font-variant: normal;">
+<a href="http://pythontutor.com/visualize.html#code=ages+%3D+%5B18,+21,+16,+12%5D%0Afor+number+in+ages%3A%0A++++if+number+%3E%3D+18%3A%0A++++++++++++print(%22come+on+in%22)%0A++++elif+number+%3E%3D+16%3A%0A++++++++++++print(%22not+quite+yet%22)%0A++++else%3A%0A++++++++++++print(%22get+outta+here%22)&amp;mode=display&amp;cumulative=false&amp;heapPrimitives=false&amp;drawParentPointers=false&amp;textReferences=false&amp;showOnlyOutputs=false&amp;py=2&amp;curInstr=16"><font style="font-size: 24px;">
+Visualise this code in action</font></a></section><section data-background-image="https://s3.amazonaws.com/media-p.slid.es/uploads/phillchill/images/54314/train_station2.png"><h1 style="font-style: normal; font-variant: normal;">
     <br>
 </h1>
 <div>
